@@ -3,7 +3,6 @@ import { Gallery } from '.';
 import { ImageGalleryItem } from './ImageGalleryItem';
 
 export const ImageGallery = ({ gallery, onClickImg }) => {
-  console.log(gallery);
   return (
     <>
       <Gallery>
