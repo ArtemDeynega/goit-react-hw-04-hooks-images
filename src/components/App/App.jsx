@@ -27,7 +27,7 @@ export const App = () => {
     if (page > 1) {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
-        behavior: 'auto',
+        behavior: 'smooth',
       });
     }
     const fetchApi = async () => {
@@ -68,16 +68,18 @@ export const App = () => {
     }
   };
   const toogleModal = () => {
-    setShowModal(prevModal => !prevModal);
+    setShowModal(!showModal);
   };
 
   const handClickImage = evt => {
     const modalImg = evt.target.dataset.src;
     const modalAlt = evt.target.alt;
 
+    setShowModal(true);
     setModalAlt(modalAlt);
     setModalImg(modalImg);
   };
+
   return (
     <>
       <Searchbar onSubmit={handleNewQuery} />
