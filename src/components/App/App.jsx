@@ -77,7 +77,7 @@ export const App = () => {
     setModalAlt(modalAlt);
     setModalImg(modalImg);
   };
-  console.log('gallery', gallery);
+
   return (
     <>
       <Searchbar onSubmit={handleNewQuery} />
