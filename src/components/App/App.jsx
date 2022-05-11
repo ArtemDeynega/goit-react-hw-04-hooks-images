@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Searchbar } from 'components/Searchbar';
 import { ImageGallery } from 'components/ImageGallery';
 import { Button } from 'components/Button';
@@ -18,7 +18,6 @@ export const App = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalImg, setModalImg] = useState('');
   const [modalAlt, setModalAlt] = useState('');
-
   useEffect(() => {
     if (searchQuery === '') {
       return;
@@ -30,56 +29,55 @@ export const App = () => {
         behavior: 'smooth',
       });
     }
+
     const fetchApi = async () => {
       setStatus('pending');
-      await imagesApi(searchQuery, page)
-        .then(data => {
+      try {
+        await imagesApi(searchQuery, page).then(data => {
           if (data.length > 0) {
             setGallery(prevGalerry => [...prevGalerry, ...data]);
             setStatus('resolved');
-            return;
-          } else {
+          }
+          if (data.length === 0) {
             setStatus('idle');
             toast.warn(
-              `По вашему запросу ${searchQuery} не чего не найдено 😕`
+              `По вашему запросу ${searchQuery} не чего не найдено 😔`
             );
           }
-        })
-        .catch(error => {
-          setError('error');
-          console.log(error.message);
-          toast.error(`Ууупс что то пошло не так`);
         });
+      } catch (error) {
+        setError(error);
+        console.log(error.message);
+      }
     };
 
     fetchApi();
   }, [page, searchQuery]);
 
-  const handleClickBtn = async () => {
-    await imagesApi(searchQuery, page).then(data => {
-      setPage(prevPage => prevPage + 1);
-      setStatus('pending');
-    });
+  const handleClickBtn = () => {
+    setPage(prevPage => prevPage + 1);
+    setStatus('pending');
   };
+
   const handleNewQuery = newRequest => {
     if (searchQuery !== newRequest) {
       setSearchQuery(newRequest);
+      setPage(1);
       setStatus('resolved');
     }
   };
   const toogleModal = () => {
     setShowModal(!showModal);
   };
-
   const handClickImage = evt => {
-    const modalImg = evt.target.dataset.src;
     const modalAlt = evt.target.alt;
+    const modalImg = evt.target.dataset.src;
 
     setShowModal(true);
     setModalAlt(modalAlt);
     setModalImg(modalImg);
   };
-
+  console.log('gallery', gallery);
   return (
     <>
       <Searchbar onSubmit={handleNewQuery} />
@@ -104,5 +102,4 @@ export const App = () => {
     </>
   );
 };
-
 export default App;
