@@ -8,7 +8,6 @@ export const Searchbar = ({ onSubmit }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleSubmit = evt => {
-    console.log(evt.target.value);
     setSearchValue(evt.target.value);
   };
 
