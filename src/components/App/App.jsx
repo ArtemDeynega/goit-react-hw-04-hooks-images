@@ -54,7 +54,7 @@ export const App = () => {
     fetchApi();
   }, [page, searchQuery]);
 
-  const handleClickBtn = () => {
+  const handleClickBtn = async () => {
     setPage(prevPage => prevPage + 1);
     setStatus('pending');
   };
@@ -64,6 +64,7 @@ export const App = () => {
       setSearchQuery(newRequest);
       setPage(1);
       setStatus('resolved');
+      setGallery([]);
     }
   };
   const toogleModal = () => {
