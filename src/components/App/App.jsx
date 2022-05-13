@@ -14,7 +14,7 @@ export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState('idle');
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [modalImg, setModalImg] = useState('');
   const [modalAlt, setModalAlt] = useState('');
